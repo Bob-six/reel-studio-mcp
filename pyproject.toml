@@ -1,0 +1,22 @@
+[project]
+name = "reel-studio-mcp"
+version = "0.1.0"
+description = "MCP tools for RezonAI Reel Studio"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["mcp>=2.3,<3", "httpx>=0.28.1", "pydantic>=2.7"]
+
+[project.scripts]
+reel-studio-mcp = "reel_studio_mcp.server:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.4"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

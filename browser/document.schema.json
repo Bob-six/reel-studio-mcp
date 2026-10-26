@@ -1,0 +1,600 @@
+{
+  "$defs": {
+    "Background": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "default": "#171127",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Color",
+          "type": "string"
+        },
+        "secondary": {
+          "default": "#4b286d",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Secondary",
+          "type": "string"
+        },
+        "asset_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset Id"
+        },
+        "fit": {
+          "default": "cover",
+          "enum": [
+            "cover",
+            "contain"
+          ],
+          "title": "Fit",
+          "type": "string"
+        },
+        "dim": {
+          "default": 0.25,
+          "maximum": 0.9,
+          "minimum": 0,
+          "title": "Dim",
+          "type": "number"
+        },
+        "blur": {
+          "default": 0,
+          "maximum": 30,
+          "minimum": 0,
+          "title": "Blur",
+          "type": "number"
+        }
+      },
+      "title": "Background",
+      "type": "object"
+    },
+    "Layer": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[\\w-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "text",
+            "lyrics",
+            "image",
+            "shape",
+            "countdown",
+            "progress",
+            "waveform",
+            "song",
+            "chords"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "default": "",
+          "maxLength": 100,
+          "title": "Name",
+          "type": "string"
+        },
+        "text": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Text",
+          "type": "string"
+        },
+        "x": {
+          "default": 10,
+          "maximum": 99,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 10,
+          "maximum": 99,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        },
+        "width": {
+          "default": 80,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "default": 10,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Height",
+          "type": "number"
+        },
+        "start": {
+          "default": 0,
+          "maximum": 1800,
+          "minimum": 0,
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 1800,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "hidden": {
+          "default": false,
+          "title": "Hidden",
+          "type": "boolean"
+        },
+        "locked": {
+          "default": false,
+          "title": "Locked",
+          "type": "boolean"
+        },
+        "color": {
+          "default": "#ffffff",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Color",
+          "type": "string"
+        },
+        "accent": {
+          "default": "#bca0ff",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Accent",
+          "type": "string"
+        },
+        "background": {
+          "anyOf": [
+            {
+              "pattern": "^#[0-9a-fA-F]{6}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Background"
+        },
+        "font_size": {
+          "default": 48,
+          "maximum": 160,
+          "minimum": 12,
+          "title": "Font Size",
+          "type": "number"
+        },
+        "weight": {
+          "default": 600,
+          "maximum": 900,
+          "minimum": 400,
+          "title": "Weight",
+          "type": "integer"
+        },
+        "align": {
+          "default": "center",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "title": "Align",
+          "type": "string"
+        },
+        "direction": {
+          "default": "rtl",
+          "enum": [
+            "rtl",
+            "ltr"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "opacity": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Opacity",
+          "type": "number"
+        },
+        "radius": {
+          "default": 12,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Radius",
+          "type": "number"
+        },
+        "outline": {
+          "default": 0,
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Outline",
+          "type": "integer"
+        },
+        "shadow": {
+          "default": true,
+          "title": "Shadow",
+          "type": "boolean"
+        },
+        "animation": {
+          "default": "none",
+          "enum": [
+            "none",
+            "fade",
+            "slide"
+          ],
+          "title": "Animation",
+          "type": "string"
+        },
+        "asset_id": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset Id"
+        },
+        "fit": {
+          "default": "cover",
+          "enum": [
+            "cover",
+            "contain"
+          ],
+          "title": "Fit",
+          "type": "string"
+        },
+        "shape": {
+          "default": "rectangle",
+          "enum": [
+            "rectangle",
+            "ellipse"
+          ],
+          "title": "Shape",
+          "type": "string"
+        },
+        "lyric_style": {
+          "default": "karaoke",
+          "enum": [
+            "karaoke",
+            "single",
+            "stacked",
+            "upcoming"
+          ],
+          "title": "Lyric Style",
+          "type": "string"
+        },
+        "lyric_highlight": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lyric Highlight"
+        },
+        "lyric_animation": {
+          "default": "none",
+          "enum": [
+            "none",
+            "fade",
+            "slide"
+          ],
+          "title": "Lyric Animation",
+          "type": "string"
+        },
+        "padding": {
+          "default": 0,
+          "maximum": 80,
+          "minimum": 0,
+          "title": "Padding",
+          "type": "number"
+        },
+        "line_height": {
+          "default": 1.45,
+          "maximum": 2.5,
+          "minimum": 1,
+          "title": "Line Height",
+          "type": "number"
+        },
+        "context_opacity": {
+          "default": 0.45,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Context Opacity",
+          "type": "number"
+        },
+        "context_scale": {
+          "default": 0.75,
+          "maximum": 1,
+          "minimum": 0.4,
+          "title": "Context Scale",
+          "type": "number"
+        },
+        "progress_style": {
+          "default": "bar",
+          "enum": [
+            "bar",
+            "rounded",
+            "segmented"
+          ],
+          "title": "Progress Style",
+          "type": "string"
+        },
+        "progress_direction": {
+          "default": "rtl",
+          "enum": [
+            "ltr",
+            "rtl"
+          ],
+          "title": "Progress Direction",
+          "type": "string"
+        },
+        "progress_segments": {
+          "default": 20,
+          "maximum": 60,
+          "minimum": 4,
+          "title": "Progress Segments",
+          "type": "integer"
+        },
+        "timer_style": {
+          "default": "remaining",
+          "enum": [
+            "remaining",
+            "elapsed",
+            "fraction",
+            "singing"
+          ],
+          "title": "Timer Style",
+          "type": "string"
+        },
+        "song_style": {
+          "default": "title_artist",
+          "enum": [
+            "title_artist",
+            "title",
+            "artist"
+          ],
+          "title": "Song Style",
+          "type": "string"
+        },
+        "chord_style": {
+          "default": "current",
+          "enum": [
+            "current",
+            "strip"
+          ],
+          "title": "Chord Style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "title": "Layer",
+      "type": "object"
+    },
+    "Line": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "start": {
+          "maximum": 1800,
+          "minimum": 0,
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "maximum": 1800,
+          "title": "End",
+          "type": "number"
+        },
+        "words": {
+          "items": {
+            "$ref": "#/$defs/Word"
+          },
+          "maxItems": 100,
+          "title": "Words",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "start",
+        "end"
+      ],
+      "title": "Line",
+      "type": "object"
+    },
+    "Word": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "start": {
+          "maximum": 1800,
+          "minimum": 0,
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "maximum": 1800,
+          "title": "End",
+          "type": "number"
+        }
+      },
+      "required": [
+        "text",
+        "start",
+        "end"
+      ],
+      "title": "Word",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1,
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "format": {
+      "default": "reels",
+      "enum": [
+        "reels",
+        "square",
+        "landscape"
+      ],
+      "title": "Format",
+      "type": "string"
+    },
+    "clip_start": {
+      "default": 0,
+      "maximum": 1800,
+      "minimum": 0,
+      "title": "Clip Start",
+      "type": "number"
+    },
+    "clip_end": {
+      "default": 30,
+      "exclusiveMinimum": 0,
+      "maximum": 1800,
+      "title": "Clip End",
+      "type": "number"
+    },
+    "lead_mute": {
+      "anyOf": [
+        {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lead Mute"
+    },
+    "backing_mute": {
+      "anyOf": [
+        {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Backing Mute"
+    },
+    "volume": {
+      "default": 1,
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Volume",
+      "type": "number"
+    },
+    "fade_in": {
+      "default": 0.25,
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Fade In",
+      "type": "number"
+    },
+    "fade_out": {
+      "default": 1,
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Fade Out",
+      "type": "number"
+    },
+    "background": {
+      "$ref": "#/$defs/Background"
+    },
+    "layers": {
+      "items": {
+        "$ref": "#/$defs/Layer"
+      },
+      "maxItems": 40,
+      "title": "Layers",
+      "type": "array"
+    },
+    "lyrics": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Line"
+          },
+          "maxItems": 500,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lyrics"
+    }
+  },
+  "title": "Document",
+  "type": "object"
+}

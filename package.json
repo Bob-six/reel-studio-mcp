@@ -1,0 +1,12 @@
+{
+  "name": "@rezonai/reel-studio-webmcp",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Browser tools for the open RezonAI Reel Studio editor",
+  "exports": "./browser/index.js",
+  "types": "./browser/index.d.ts",
+  "files": ["browser/index.js", "browser/index.d.ts", "browser/document.schema.json"],
+  "license": "MIT",
+  "scripts": {"test": "node --test browser/*.test.js"},
+  "dependencies": {"ajv": "^8.17.1"}
+}

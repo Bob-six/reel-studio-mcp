@@ -216,3 +216,8 @@ async def test_failed_or_unsafe_upload_returns_safe_error(tmp_path, destination,
 def test_reject_unsafe_configuration(url):
     with pytest.raises(ValueError):
         build_server(url, TOKEN)
+
+
+def test_browser_schema_matches_python_contract():
+    from pathlib import Path
+    assert json.loads((Path(__file__).parents[1] / "browser/document.schema.json").read_text()) == Document.model_json_schema()

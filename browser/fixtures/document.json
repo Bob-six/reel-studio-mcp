@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "format": "reels",
+  "clip_start": 0.0,
+  "clip_end": 30.0,
+  "lead_mute": null,
+  "backing_mute": null,
+  "volume": 1.0,
+  "fade_in": 0.25,
+  "fade_out": 1.0,
+  "background": {
+    "color": "#171127",
+    "secondary": "#4b286d",
+    "asset_id": null,
+    "fit": "cover",
+    "dim": 0.25,
+    "blur": 0.0
+  },
+  "layers": [],
+  "lyrics": null
+}

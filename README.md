@@ -1,21 +1,38 @@
-# Reel Studio MCP
+# Reel Studio browser tools
 
-MCP tools for creating and editing RezonAI reels, preparing lyrics, and rendering previews and exports. Rendering and storage run on the RezonAI backend.
+Use an AI agent alongside the open RezonAI Reel Studio page. Browser tools use the page's existing sign-in, editor draft, Undo history and autosave. Users do not copy tokens or configure a hosted MCP endpoint.
 
-## Hosted connection
+Keep Studio open and use a browser agent that supports WebMCP. The page registers tools through `document.modelContext`, with a fallback for browsers exposing the older `navigator.modelContext` API. WebMCP is experimental; an ordinary remote MCP client cannot connect to a webpage URL as though it were a hosted MCP server.
 
-Add `https://api.rezonai.ir/mcp` as a remote Streamable HTTP server in an OAuth-capable MCP client. Sign in to RezonAI in the browser and approve the requested Studio permissions. Tokens stay with the client; never paste them into chat. Connections can be revoked from the MCP guide in the reels page.
+Tools list sources and projects, open or create projects, read the live draft, replace a validated document using its `edit_version`, select a source, save, prepare lyrics, render and inspect jobs. Upload files through the page's file picker. Previews are the default; the page asks for confirmation before a full export.
 
-The hosted endpoint requires the corresponding backend OAuth release. Until deployed, it is unavailable. Upload local media through the web app: the hosted server cannot access your computer.
+Rendering, storage and processing continue through the existing RezonAI API. This package adds no backend MCP server or OAuth service. Server authorization and account limits still apply.
 
-## Local connector
+## Integrate
 
-Install from this repository with `uv tool install git+https://github.com/Bob-six/reel-studio-mcp.git`, then launch `reel-studio-mcp` from a stdio MCP client. Configure `REEL_STUDIO_API_URL` (including `/api/v1`) and `REEL_STUDIO_TOKEN` through the client's private secret configuration. This operator-only mode is for people who already hold a website access token; it does not issue or refresh tokens. If you do not already have a token, use the hosted connection. Browser OAuth is provided by the hosted endpoint.
+Install the browser package from Git:
 
-Set `REEL_STUDIO_MEDIA_ROOT` to a dedicated approved folder only if local uploads are needed. Uploads are disabled by default. Never commit tokens, signed links, private media or client secret configuration.
+```sh
+npm install github:Bob-six/reel-studio-mcp
+```
 
-Call `studio_help` or read `studio://workflow` and `studio://schema` before editing. Fetch the latest project revision before a save, reconcile conflicts, render a preview, then export after approval. Tools never publish videos to social networks.
+The host application provides callbacks for its existing operations:
+
+```js
+import { modelContext, registerStudioTools } from '@rezonai/reel-studio-webmcp'
+
+const controller = new AbortController()
+await registerStudioTools(modelContext(), actions, controller.signal)
+// On leaving Studio or signing out:
+controller.abort()
+```
+
+`actions` implements `StudioActions` from `browser/index.d.ts`. Register the base actions on the project library, and include editor actions only while a project is open. Read the current draft for every call, including unsaved edits. Reject stale edit versions and locked-layer changes in the host callback. Use the host's normal save/conflict and job flows. The document validator checks structure; the host must also check timing, source duration and asset ownership.
+
+If WebMCP is absent or registration fails, keep normal editor operation available and explain that the browser agent cannot use the tools. Do not expose credentials to agents or return raw API errors.
 
 ## Development
 
-Run `uv sync`, `uv run pytest`, and `uv run ruff check src tests`. The tests mock API and storage traffic. Backend integration checks compare the copied document schemas to prevent contract drift.
+Run `npm ci && npm test` for the browser adapter. The checked-in document JSON schema comes from the Python model; `uv sync && uv run pytest` checks parity and the existing stdio connector.
+
+The Python stdio connector remains available for operators who already hold an API token. It is an optional legacy interface; its source is in `src/reel_studio_mcp`. It does not provide browser sign-in or renew tokens. Browser users do not need Python or this connector.
